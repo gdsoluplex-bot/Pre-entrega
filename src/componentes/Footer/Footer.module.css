@@ -1,0 +1,19 @@
+.footer_navbar {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
+  font-size: 28px;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+
+.footer_navbar i {
+  transition: 0.3s;
+}
+
+.footer_navbar i:hover {
+  transform: scale(1.2);
+}
