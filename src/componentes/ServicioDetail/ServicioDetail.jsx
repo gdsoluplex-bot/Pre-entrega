@@ -1,36 +1,28 @@
 import { useEffect, useState } from 'react';
-
 import { useParams } from 'react-router-dom';
+import { doc, getDoc } from "firebase/firestore"; 
+import { db } from '../../firebase/config';
 
-function ServicioDetail() {
+const ServicioDetail = () => {
 
   const { id } = useParams();
 
-  const [servicio, setservicio] = useState(null);
+  const [servicio, setServicio] = useState(null);
 
   useEffect(() => {
-
-    fetch('/data/servicios.json')
-      .then(response => response.json())
-      .then(data => {
-
-      
-      const servicioFound = data.find(
-        (item) => item.id === parseInt(id)
-      );
-
-
-
-        setservicio(servicioFound);
-
-      })
-      .catch(error =>
-        console.error(
-          'Error al cargar servicio:',
-          error
-        )
-      );
-
+    if (id) {
+// Creamos la referencia al documento 
+  const docRef = doc(db, "servicios", id); 
+  getDoc(docRef) 
+    .then((resp) => { 
+      if (resp.exists()) { // Verificamos si el documento existe 
+          setServicio({ ...resp.data(), id: resp.id }); 
+        } else { 
+          console.log("No se encontró el producto"); 
+        } 
+      }) 
+      .catch(error => console.log(error)); 
+    } 
   }, [id]);
 
   // Loading
@@ -54,17 +46,10 @@ function ServicioDetail() {
         alt={servicio.titulo}
         width="300"
       />
-      <p>
-        <strong>Género:</strong> {servicio.rubro}
-      </p>
-
-      <p>
-        <strong>Sesión:</strong> {servicio.duracion}
-      </p>
-
-      <p>
-        <strong>Descripción:</strong> {servicio.descripcion}
-      </p>
+      <p><strong>Género:</strong> {servicio.rubro}</p>
+      <p><strong>Sesión:</strong> {servicio.duracion}</p>
+      <p><strong>Descripción:</strong> {servicio.descripcion}</p>
+      <p><strong>Costo:</strong> {servicio.costo}</p>
 
     </div>
   );

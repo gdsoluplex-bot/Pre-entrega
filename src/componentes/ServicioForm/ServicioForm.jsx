@@ -4,6 +4,7 @@ function ServicioForm({
   handleSubmit,
   handlePosterChange,
   loading,
+  modoEdicion
 }) {
 
   const formStyle = {
@@ -20,8 +21,22 @@ function ServicioForm({
   return (
     <form style={formStyle} onSubmit={handleSubmit}>
 
-      <h2>Agregar Servicio</h2>
-
+    <h2>{modoEdicion
+        ? "Editar Servicio"
+        : "Agregar Nuevo Servicio"}
+    </h2>
+      <div>   
+        <label>Id: </label>
+       <input
+        type="text"
+        name="id"
+        placeholder="Id"
+        value={servicioData.id}
+        onChange={handleChange}
+      />
+      </div>
+      <div>   
+         <label>Título: </label>
       <input
         type="text"
         name="titulo"
@@ -29,22 +44,74 @@ function ServicioForm({
         value={servicioData.titulo}
         onChange={handleChange}
       />
+      </div>
 
+      <div>   
+        <label>Rubro: </label>
       <input
         type="text"
-        name="rama"
-        placeholder="Rama"
+        name="rubro"
+        placeholder="Rubro"
         value={servicioData.rubro}
         onChange={handleChange}
       />
+      </div>
 
+      <div>   
+        <label>Destacado: </label>
       <input
-        type="number"
+        type="checkbox"
+        name="destacado"
+        placeholder="Destacado"
+        checked={servicioData.destacado}
+        onChange={handleChange}
+      />
+      </div>
+
+      <div>   
+        <label>Duracion: </label>
+      <input
+        type="text"
         name="duracion"
         placeholder="Duración"
         value={servicioData.duracion}
         onChange={handleChange}
       />
+      </div>
+      
+      <div>   
+        <label>Costo: </label>
+      <input
+        type="number"
+        name="costo"
+        placeholder="Costo"
+        value={servicioData.costo}
+        onChange={handleChange}
+      />
+      </div>
+
+      <div>   
+        <label>Costo: </label>
+      <input
+        type="number"
+        name="stock"
+        placeholder="Stock"
+        value={servicioData.stock}
+        onChange={handleChange}
+      />
+      </div>
+
+      <div>   
+        <label>Descripcion: </label>      
+      <input
+        type="text"
+        name="descripcion"
+        placeholder="Descripcion"
+        value={servicioData.descripcion}
+        onChange={handleChange}
+      />
+      </div>
+
 
       <input
         type="file"
@@ -53,8 +120,10 @@ function ServicioForm({
 
       <button type="submit" disabled={loading}>
         {loading
-          ? "Subiendo Servicio..."
-          : "Guardar Servicio"}
+        ? "Procesando..."
+          : modoEdicion
+        ? "Actualizar Producto"
+        : "Guardar Producto"}
       </button>
 
     </form>

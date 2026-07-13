@@ -1,17 +1,52 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Contador from "../Contador/Contador";
+import { useCart } from "../../context/CartContext";
 
-function ServicioItem({ servicio }) {
+
+function ServicioItem({ id, servicio, poster, costo, stock }) {
 
   const [favorito, setFavorito] = useState(false);
+  
+  const marcarComoFavorito = () => {
+    setFavorito(!favorito)
+  }
 
-  const toggleFavorito = () => {
-    setFavorito(!favorito);
+  const producto = {
+    id: servicio.id,
+    nombre: servicio.titulo,
+    poster: servicio.poster,
+    destacado: servicio.destacado,
+    disponible: servicio.stock,
+    precio: servicio.costo,
+    stock: servicio.stock
   };
 
-  return (
+  const [cantidad, setCantidad] = useState(1);
 
+  //funciones incrementar y decrementar
+  const incrementar = () => {
+    if (cantidad < (servicio.stock - cantidadActual) ) {
+      setCantidad(cantidad + 1);
+    }
+  };
+
+  const decrementar = () => {
+    if (cantidad > 1) {
+      setCantidad(cantidad - 1);
+    }
+  };
+
+  const { addToCart, getCantidadActual } = useCart();
+
+  const handleAddToCart = () => {
+
+    addToCart(producto, cantidad);
+    alert(`Agregaste ${cantidad} unidades de ${servicio.titulo} al carrito.`);
+  };
+
+  const cantidadActual = getCantidadActual(producto.id);
+
+  return (
 
     <div style={{
       border: '1px solid #ccc',
@@ -20,9 +55,7 @@ function ServicioItem({ servicio }) {
       backgroundColor: '#fff',
       textAlign: "center"
     }}
-
     >
-
 
       <Link to={`/servicio/${servicio.id}`}>
         <img
@@ -51,7 +84,7 @@ function ServicioItem({ servicio }) {
           style={{ cursor: "pointer", fontSize: "20px" }}
           onClick={(e) => {
             e.preventDefault();      // 👈 IMPORTANTÍSIMO
-            toggleFavorito();
+            marcarComoFavorito();
           }}
         >
           {favorito ? '⭐' : '☆'}
@@ -59,17 +92,47 @@ function ServicioItem({ servicio }) {
 
       </div>
 
-
       <p>{servicio.rubro}</p>
 
-      <p>{servicio.duracion}</p>
+      <p>Duración: {servicio.duracion}</p>
 
+      <p>Disponibles: {servicio.stock - cantidadActual}</p>
 
+      <p>Valor: $ {servicio.costo}</p>
 
-      <Contador />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "10px",
+          marginTop: "10px"
+        }}
+      >
+        <button onClick={decrementar}>
+          -
+        </button>
 
+        <span>{cantidad}</span>
+
+        <button onClick={incrementar}>
+          +
+        </button>
+      </div>
+
+      <p><button
+        onClick={handleAddToCart}>
+        Agregar al Carrito
+      </button></p>
+
+      {cantidadActual > 0 && ( 
+        <h4>Agregaste {cantidadActual} 
+        {cantidadActual === 1 ? " servicio" : " servicios"}
+        {" "} al carrito</h4>
+      )}
     </div>
   );
+
 }
 
 export default ServicioItem;
