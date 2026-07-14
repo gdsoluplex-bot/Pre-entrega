@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nombre": "Analía Gonzalez",
+    "email": "analiag@tubienestar.com.ar",
+    "puesto": "Reiki",
+    "foto": "/data/Imagenes/mujer1.webp"
+  },
+  {
+    "id": 2,
+    "nombre": "Gustavo Davila",
+    "email": "gustavod@tubienestar.com.ar",
+    "puesto": "Magnifield Healing",
+    "foto": "/data/Imagenes/hombre2.jpg"
+  },
+  {
+    "id": 3,
+    "nombre": "Daniela Conti",
+    "email": "danielac@tubienestar.com.ar",
+    "puesto": "Meditacion",
+    "foto": "/data/Imagenes/mujer2.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Sebastian Ruiz",
+    "email": "sebastianr@tubienestar.com.ar",
+    "puesto": "Registros Akashicos",
+    "foto": "/data/Imagenes/hombre1.jpg"
+  }
+]
